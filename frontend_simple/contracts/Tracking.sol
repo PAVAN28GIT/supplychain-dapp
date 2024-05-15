@@ -19,6 +19,18 @@ contract Tracking {
         address supplier;
         PackageStatus status;
     }
+    event ProductAdded(
+        uint productId,
+        string rawMaterial,
+        string farmerName,
+        string location,
+        uint quantity,
+        uint costPerKg,
+        address manufacturer,
+        address shipper,
+        address supplier,
+        PackageStatus status
+    );
 
     mapping(uint => Product) public products;
     uint public totalProducts;
@@ -47,6 +59,18 @@ contract Tracking {
     ) public {
         totalProducts++;
         products[totalProducts] = Product(
+            rawMaterial,
+            farmerName,
+            location,
+            quantity,
+            costPerKg,
+            manufacturer,
+            shipper,
+            supplier,
+            PackageStatus.AtCreator
+        );
+        emit ProductAdded(
+            totalProducts,
             rawMaterial,
             farmerName,
             location,
@@ -135,5 +159,3 @@ contract Tracking {
         emit ShipmentUpdate(productId, products[productId].shipper, supl, 2);
     }
 }
-
-// TockenModule#Tracking - 0x60C07037aef5E474A2D85fb080c51950722B361c
